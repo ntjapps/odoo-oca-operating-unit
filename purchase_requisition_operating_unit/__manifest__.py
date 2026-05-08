@@ -1,10 +1,11 @@
 # Copyright 2016 ForgeFlow S.L. (https://www.forgeflow.com)
 # Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# Copyright 2026 NTJ (https://www.ntj.co.id)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "Operating Unit in Purchase Requisitions",
-    "version": "15.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "ForgeFlow S.L.,"
     "Serpent Consulting Services Pvt. Ltd.,"
     "Odoo Community Association (OCA)",

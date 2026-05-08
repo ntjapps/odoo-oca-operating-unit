@@ -1,9 +1,10 @@
 # Copyright 2021 Ecosoft Co., Ltd. (http://ecosoft.co.th)
+# Copyright 2026 NTJ (https://www.ntj.co.id)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     "name": "Access all OUs' Purchase Agreement",
-    "version": "14.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Ecosoft,Odoo Community Association (OCA)",
     "category": "Purchase Management",
     "license": "AGPL-3",

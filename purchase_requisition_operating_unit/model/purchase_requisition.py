@@ -12,8 +12,6 @@ class PurchaseRequisition(models.Model):
     operating_unit_id = fields.Many2one(
         comodel_name="operating.unit",
         string="Operating Unit",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         default=lambda self: self.env["res.users"].operating_unit_default_get(
             self.env.uid
         ),
