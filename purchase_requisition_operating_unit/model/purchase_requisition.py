@@ -12,31 +12,29 @@ class PurchaseRequisition(models.Model):
     operating_unit_id = fields.Many2one(
         comodel_name="operating.unit",
         string="Operating Unit",
-        default=lambda self: self.env["res.users"].operating_unit_default_get(
+        default=lambda self: self.env["res.users"]._get_default_operating_unit(
             self.env.uid
         ),
     )
-    picking_type_id = fields.Many2one(
-        comodel_name="stock.picking.type",
-        string="Picking Type",
-        domain=[("code", "=", "incoming")],
-        required=True,
-        default=lambda self: self._get_picking_in(),
-    )
 
-    def _get_picking_in(self):
-        res = super()._get_picking_in()
-        type_obj = self.env["stock.picking.type"]
-        operating_unit = self.env["res.users"].operating_unit_default_get(self.env.uid)
-        types = type_obj.search(
-            [
-                ("code", "=", "incoming"),
-                ("warehouse_id.operating_unit_id", "=", operating_unit.id),
-            ]
-        )
-        if types:
-            res = types[:1].id
+    def _default_picking_type_id(self):
+        res = super()._default_picking_type_id()
+        operating_unit = self.env["res.users"]._get_default_operating_unit(self.env.uid)
+        if operating_unit:
+            types = self.env["stock.picking.type"].search(
+                [
+                    ("code", "=", "incoming"),
+                    ("warehouse_id.operating_unit_id", "=", operating_unit.id),
+                ],
+                limit=1,
+            )
+            if types:
+                return types
         return res
+
+    picking_type_id = fields.Many2one(
+        default=_default_picking_type_id,
+    )
 
     @api.constrains("operating_unit_id", "company_id")
     def _check_company_operating_unit(self):
