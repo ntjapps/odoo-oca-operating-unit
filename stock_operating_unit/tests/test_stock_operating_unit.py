@@ -29,7 +29,7 @@ class TestStockOperatingUnit(common.TestStockCommon, OperatingUnitCommon):
         # Update users
         cls.user1.write(
             {
-                "groups_id": [
+                "group_ids": [
                     Command.link(cls.group_stock_manager.id),
                 ],
                 "operating_unit_ids": [
@@ -40,7 +40,7 @@ class TestStockOperatingUnit(common.TestStockCommon, OperatingUnitCommon):
         )
         cls.user2.write(
             {
-                "groups_id": [
+                "group_ids": [
                     Command.link(cls.group_stock_manager.id),
                 ],
                 "operating_unit_ids": [
