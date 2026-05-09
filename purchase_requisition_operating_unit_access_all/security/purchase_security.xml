@@ -3,8 +3,7 @@
 
     <record id="group_all_ou_purchase_requisition" model="res.groups">
         <field name="name">Access all OUs' Purchase Agreement</field>
-        <field name="category_id" ref="operating_unit.module_operating_units" />
-    </record>
+</record>
 
     <function model="ir.rule" name="write">
         <value

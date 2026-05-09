@@ -4,7 +4,7 @@
 
 {
     "name": "Access all OUs' Purchase Agreement",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "author": "Ecosoft,Odoo Community Association (OCA)",
     "category": "Purchase Management",
     "license": "AGPL-3",

@@ -2,8 +2,7 @@
 <odoo>
     <record id="group_all_ou_stock" model="res.groups">
         <field name="name">Access all OUs' stock</field>
-        <field name="category_id" ref="operating_unit.module_operating_units" />
-    </record>
+</record>
 
     <function model="ir.rule" name="write">
         <value
