@@ -1,0 +1,20 @@
+# Copyright 2017 ForgeFlow S.L.
+# Copyright 2017 Serpent Consulting Services Pvt. Ltd.
+# Copyright 2026 NTJ (https://www.ntj.co.id)
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+# v19-incompat: v19 web.external_layout_bold/bubble templates no longer expose '<div t-field="company.report_header">' anchor; xpath fails on those layouts.
+{
+    "name": "Qweb Report With Operating Unit",
+    "version": "19.0.1.0.0",
+    "category": "Reports/Qweb",
+    "license": "LGPL-3",
+    "author": "ForgeFlow S.L., "
+    "Serpent Consulting Services Pvt. Ltd.,"
+    "Onestein,"
+    "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/operating-unit",
+    "depends": ["operating_unit"],
+    "data": ["views/operating_unit_view.xml", "views/report_qweb_operating_unit.xml"],
+    "installable": False,
+}
