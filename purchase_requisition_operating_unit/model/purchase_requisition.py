@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError  # retained: used in _check_company_operating_unit
 
 
 class PurchaseRequisition(models.Model):
@@ -53,26 +53,22 @@ class PurchaseRequisition(models.Model):
 
     @api.constrains("operating_unit_id", "picking_type_id")
     def _check_warehouse_operating_unit(self):
-        for rec in self:
-            picking_type = rec.picking_type_id
-            if picking_type:
-                if (
-                    picking_type.warehouse_id
-                    and picking_type.warehouse_id.operating_unit_id
-                    and rec.operating_unit_id
-                    and picking_type.warehouse_id.operating_unit_id
-                    != rec.operating_unit_id
-                ):
-                    raise UserError(
-                        _(
-                            "Configuration error!\nThe Operating "
-                            "Unit in Purchase Requisition and the Warehouse of picking "
-                            "type must belong to the same Operating Unit."
-                        )
-                    )
+        # APJII v15-parity relaxation (2026-06-17, NTJ):
+        # APJII runs a SINGLE central warehouse bound to a placeholder OU; real
+        # operational OUs have no dedicated warehouse.  The OCA hard
+        # OU↔warehouse match would block every save for a real OU, exactly as it
+        # did in v15 (where this constraint did not exist).  We keep the method
+        # signature intact so any external references remain valid, but we no
+        # longer raise — a central warehouse MAY serve all operating units.
+        pass
 
     @api.onchange("operating_unit_id")
     def _onchange_operating_unit_id(self):
+        # APJII v15-parity relaxation (2026-06-17, NTJ):
+        # Auto-set picking_type_id only when a warehouse dedicated to the
+        # selected OU exists — convenience, not a hard requirement.
+        # If no OU-specific warehouse is found (central-warehouse topology),
+        # leave picking_type_id at its current/default value and do NOT raise.
         type_obj = self.env["stock.picking.type"]
         if self.operating_unit_id:
             types = type_obj.search(
@@ -81,15 +77,9 @@ class PurchaseRequisition(models.Model):
                     ("warehouse_id.operating_unit_id", "=", self.operating_unit_id.id),
                 ]
             )
-            if not types:
-                raise UserError(
-                    _(
-                        "No Warehouse found with the "
-                        "Operating Unit indicated in the "
-                        "Purchase Requisition!"
-                    )
-                )
-            self.picking_type_id = types[:1]
+            if types:
+                self.picking_type_id = types[:1]
+            # else: no dedicated warehouse — leave picking_type_id unchanged.
 
 
 class PurchaseRequisitionLine(models.Model):
