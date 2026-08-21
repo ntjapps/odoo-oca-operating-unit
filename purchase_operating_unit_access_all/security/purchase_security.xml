@@ -3,7 +3,8 @@
 
     <record id="group_all_ou_purchase" model="res.groups">
         <field name="name">Access all OUs' purchase orders</field>
-</record>
+        <field name="category_id" ref="operating_unit.module_operating_units" />
+    </record>
 
     <function model="ir.rule" name="write">
         <value
